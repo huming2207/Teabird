@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/teabird.iml" filepath="$PROJECT_DIR$/.idea/modules/teabird.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/teabird_main.iml" filepath="$PROJECT_DIR$/.idea/modules/teabird_main.iml" group="teabird" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/teabird_test.iml" filepath="$PROJECT_DIR$/.idea/modules/teabird_test.iml" group="teabird" />
+    </modules>
+  </component>
+</project>
