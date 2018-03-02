@@ -1,4 +1,4 @@
-package Worker.WorkerConfig;
+package worker.config;
 
 public enum FilterLevel
 {

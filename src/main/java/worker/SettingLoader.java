@@ -1,4 +1,4 @@
-package Worker;
+package worker;
 
 import org.ini4j.Wini;
 import twitter4j.auth.AccessToken;

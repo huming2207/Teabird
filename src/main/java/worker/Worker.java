@@ -1,4 +1,4 @@
-package Worker;
+package worker;
 
 import twitter4j.*;
 import twitter4j.auth.AccessToken;
