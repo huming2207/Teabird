@@ -5,9 +5,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MainApplication extends Application
+public class TeabirdApplication extends Application
 {
     private Stage primaryStage;
+
+    public static void main(String[] args)
+    {
+        Application.launch(TeabirdApplication.class, args);
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception
@@ -23,7 +28,7 @@ public class MainApplication extends Application
 
             // Load layout from fxml
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApplication.class.getResource("view/Home.fxml"));
+            loader.setLocation(TeabirdApplication.class.getResource("view/Home.fxml"));
 
             // Show the scene from the layout
             Scene scene = new Scene(loader.load());
