@@ -14,5 +14,23 @@
     <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.8.2" level="project" />
     <orderEntry type="library" name="Gradle: org.ini4j:ini4j:0.5.4" level="project" />
     <orderEntry type="library" name="Gradle: org.twitter4j:twitter4j-core:4.0.6" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar:///usr/lib/jvm/java-1.8.0-openjdk-amd64/lib/ant-javafx.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar:///usr/lib/jvm/java-1.8.0-openjdk-amd64/lib/javafx-mx.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
