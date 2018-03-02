@@ -1,5 +1,6 @@
-package gui;
+package controller;
 
 public class Home
 {
+
 }
