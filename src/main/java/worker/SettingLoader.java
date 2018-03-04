@@ -49,4 +49,19 @@ public class SettingLoader
 
         return ini.get("consumer", "secret");
     }
+
+    public static void writeSettings(String consumerToken, String consumerSecret, String accessToken, String accessSecret)
+    {
+        Wini ini = null;
+        try {
+            ini = new Wini(new File("settings.ini"));
+            ini.put("consumer", "token", consumerToken);
+            ini.put("consumer", "secret", consumerSecret);
+            ini.put("access", "token", accessToken);
+            ini.put("access", "secret", accessSecret);
+            ini.store();
+        } catch (IOException error) {
+            error.printStackTrace();
+        }
+    }
 }
