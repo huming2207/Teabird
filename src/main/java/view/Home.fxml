@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -12,9 +14,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Home">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeController">
     <TabPane prefHeight="400.0" prefWidth="601.0" tabClosingPolicy="UNAVAILABLE">
-        <Tab text="Crawler">
+        <Tab text="Crawler runner">
             <GridPane>
                 <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="10.0" prefWidth="110.0" />
@@ -23,27 +25,75 @@
                 </columnConstraints>
                 <rowConstraints>
                     <RowConstraints maxHeight="127.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="127.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="154.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="178.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="280.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="280.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="255.0" minHeight="10.0" prefHeight="182.0" vgrow="SOMETIMES" />
                 </rowConstraints>
-                <Label alignment="CENTER_RIGHT" contentDisplay="BOTTOM" prefHeight="18.0" prefWidth="106.0" text="Keywords List:" GridPane.rowIndex="1" />
-                <TextField fx:id="keywordListPathTextfield" prefHeight="28.0" prefWidth="173.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="106.0" text="User ID List: " GridPane.rowIndex="2" />
-                <Button mnemonicParsing="false" text="Select keyword list" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <TextField fx:id="useridListPathTextfield" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <Button mnemonicParsing="false" prefHeight="28.0" prefWidth="131.0" text="Select User ID list" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                <ToggleButton mnemonicParsing="false" prefHeight="28.0" prefWidth="324.0" text="Start" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
-                <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="106.0" text="Output path: " GridPane.rowIndex="3" />
-                <TextField fx:id="outputPathTextfield" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                <Button mnemonicParsing="false" text="Select output path" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                <TextArea fx:id="outputTextarea" prefHeight="145.0" prefWidth="565.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="6" />
+                <ToggleButton fx:id="startStopToggleButton" mnemonicParsing="false" onAction="#handleStartStopToggleButton" prefHeight="48.0" prefWidth="324.0" text="Start" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+
+                <TextArea fx:id="outputTextArea" prefHeight="145.0" prefWidth="565.0" promptText="Debug output shows here" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
             </GridPane>
         </Tab>
-        <Tab text="Settings &amp; About">
+        <Tab text="Crawler settings">
+            <GridPane>
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="294.0" minWidth="10.0" prefWidth="147.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="406.0" minWidth="10.0" prefWidth="72.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="406.0" minWidth="10.0" prefWidth="65.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="406.0" minWidth="10.0" prefWidth="67.0" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="406.0" minWidth="10.0" prefWidth="70.0" />
+                    <ColumnConstraints maxWidth="184.0" minWidth="124.0" prefWidth="184.0" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints maxHeight="116.0" minHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="116.0" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="116.0" minHeight="10.0" prefHeight="82.0" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="116.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="116.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
+               <RowConstraints maxHeight="116.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="116.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                </rowConstraints>
+                <Label alignment="CENTER_RIGHT" contentDisplay="BOTTOM" prefHeight="18.0" prefWidth="93.0" text="Keywords:" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+               <opaqueInsets>
+                  <Insets right="3.0" />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets right="3.0" />
+               </GridPane.margin></Label>
+                <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="80.0" text="User IDs: " GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="86.0" text="Output path: " GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets right="3.0" />
+               </GridPane.margin></Label>
+                <TextField fx:id="outputPathTextField" promptText="Specify an output folder" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="5" />
+                <Button fx:id="setOutputButton" mnemonicParsing="false" onAction="#handleSetOutputButton" prefHeight="28.0" prefWidth="155.0" text="Select output path" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+            <Label prefHeight="18.0" prefWidth="79.0" text="Filter mode:" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+            <TextArea fx:id="keywordTextArea" prefHeight="200.0" prefWidth="271.0" promptText="Comma-separated, e.g. &quot;Donald Trump,Melcolm Turnbull&quot;..." GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets bottom="5.0" right="15.0" />
+               </GridPane.margin></TextArea>
+            <TextArea fx:id="userIdTextArea" prefHeight="200.0" prefWidth="200.0" promptText="Comma-separated, must be numeric IDs" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets right="15.0" top="5.0" />
+               </GridPane.margin>
+            </TextArea>
+            <Label text="Languages:" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets right="5.0" />
+               </GridPane.margin>
+            </Label>
+            <TextField fx:id="languageTextField" promptText="e.g. &quot;en,zh-CN,zh-TW,zh-HK,jp&quot;" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="4">
+               <GridPane.margin>
+                  <Insets right="15.0" />
+               </GridPane.margin></TextField>
+            <Button fx:id="saveSettingsButton" mnemonicParsing="false" onAction="#handleCrawlerSettingButton" prefHeight="28.0" prefWidth="450.0" text="Apply settings" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="6" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets right="15.0" top="5.0" />
+               </GridPane.margin></Button>
+            <CheckBox fx:id="strictFilterCheckbox" mnemonicParsing="false" text="Strict filtering mode (not recommended for crawling)" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            </GridPane>
+        </Tab>
+        <Tab text="Authorisation Settings">
             <GridPane>
                 <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="167.0" />
@@ -52,12 +102,11 @@
                 </columnConstraints>
                 <rowConstraints>
                     <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="36.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="115.0" minHeight="0.0" prefHeight="41.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="268.0" minHeight="10.0" prefHeight="161.0" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="97.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="85.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="86.0" minHeight="10.0" prefHeight="63.0" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="127.0" minHeight="0.0" prefHeight="84.0" vgrow="SOMETIMES" />
                 </rowConstraints>
                 <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="160.0" text="Consumer token:" GridPane.rowIndex="1" />
                 <Label alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="161.0" text="Consumer secret:" GridPane.rowIndex="2" />
@@ -67,7 +116,10 @@
                 <TextField fx:id="consumerSecretTextfield" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 <TextField fx:id="accessTokenTextfield" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <TextField fx:id="accessSecretTextfield" prefHeight="28.0" prefWidth="416.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                <Button mnemonicParsing="false" prefHeight="28.0" prefWidth="428.0" text="Save" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <Button fx:id="settingSaveButton" mnemonicParsing="false" onAction="#handleApiSettingButton" prefHeight="28.0" prefWidth="428.0" text="Save" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets top="15.0" />
+               </GridPane.margin></Button>
             </GridPane>
         </Tab>
     </TabPane>

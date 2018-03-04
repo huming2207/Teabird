@@ -2,13 +2,23 @@ package controller;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
-import javafx.fxml.FXML;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import worker.TeabirdApplication;
 
-public class Home
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import twitter4j.FilterQuery;
+import worker.TeabirdApplication;
+import worker.Worker;
+import worker.config.FilterQueryGenerator;
+
+import java.io.File;
+
+public class HomeController
 {
+    private TeabirdApplication teabirdApplication;
+
     @FXML
     private TextField consumerTokenTextfield;
 
@@ -22,18 +32,58 @@ public class Home
     private TextField accessSecretTextfield;
 
     @FXML
-    private TextField keywordListPathTextfield;
+    private TextArea keywordTextArea;
 
     @FXML
-    private TextField useridListPathTextfield;
+    private TextArea userIdTextArea;
 
     @FXML
-    private TextField outputPathTextfield;
+    private CheckBox strictFilterCheckbox;
 
     @FXML
-    private TextArea outputTextarea;
+    private TextArea outputTextArea;
 
-    private TeabirdApplication teabirdApplication;
+    @FXML
+    private Button settingSaveButton;
+
+    @FXML
+    private ToggleButton startStopToggleButton;
+
+    @FXML
+    private Button setOutputButton;
+
+    @FXML
+    private Button saveSettingsButton;
+
+    @FXML
+    private void handleApiSettingButton()
+    {
+
+    }
+
+    @FXML
+    private void handleStartStopToggleButton()
+    {
+        startStopToggleButton.setSelected(!startStopToggleButton.isSelected());
+
+        if(startStopToggleButton.isSelected()) {
+            Worker worker = new Worker(new FilterQuery());
+
+        }
+    }
+
+    @FXML
+    private void handleSetOutputButton()
+    {
+        File file = new DirectoryChooser().showDialog(new Stage());
+    }
+
+    @FXML
+    private void handleCrawlerSettingButton()
+    {
+
+    }
+
 
     public void setMainApp(TeabirdApplication teabirdApplication)
     {
@@ -42,6 +92,8 @@ public class Home
 
     public void appendDebugText(String text)
     {
-        Platform.runLater(() -> outputTextarea.appendText(text));
+        Platform.runLater(() -> outputTextArea.appendText(text));
     }
+
+
 }
