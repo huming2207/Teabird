@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class SettingLoader
 {
-    public static AccessToken getAccessToken()
+    private static String getString(String section, String option)
     {
         Wini ini = null;
         try {
@@ -18,39 +18,75 @@ public class SettingLoader
             return null;
         }
 
-        String accessToken = ini.get("access", "token");
-        String accessSecret = ini.get("access", "secret");
+        return ini.get(section, option);
+    }
 
-        return new AccessToken(accessToken, accessSecret);
+    public static AccessToken getAccessToken()
+    {
+        String accessToken = getString("access", "token");
+        String accessSecret = getString("access", "secret");
+
+        if (accessToken != null && accessSecret != null) {
+            return new AccessToken(accessToken, accessSecret);
+        } else {
+            return new AccessToken("","");
+        }
+    }
+
+    public static String getAccessTokenStr()
+    {
+        return getString("access", "token");
+    }
+
+    public static String getAccessSecretStr()
+    {
+        return getString("access", "secret");
     }
 
     public static String getConsumerToken()
     {
-        Wini ini = null;
-        try {
-            ini = new Wini(new File("settings.ini"));
-        } catch (IOException error) {
-            System.err.println("Setting invalid, check before use.");
-            return null;
-        }
-
-        return ini.get("consumer", "token");
+        return getString("consumer", "token");
     }
 
     public static String getConsumerTokenSecret()
     {
-        Wini ini = null;
-        try {
-            ini = new Wini(new File("settings.ini"));
-        } catch (IOException error) {
-            System.err.println("Setting invalid, check before use.");
-            return null;
-        }
-
-        return ini.get("consumer", "secret");
+        return getString("consumer", "secret");
     }
 
-    public static void writeSettings(String consumerToken, String consumerSecret, String accessToken, String accessSecret)
+    public static String getKeywords()
+    {
+        return getString("crawler", "keywords");
+    }
+
+    public static String getUsers()
+    {
+        return getString("crawler", "users");
+    }
+
+    public static boolean getStrictFilterMode()
+    {
+        String value = getString("crawler", "strict");
+
+        if(value != null)
+            return value.equals("yes");
+        else
+            return false;
+    }
+
+    public static String getLanguages()
+    {
+        return getString("crawler", "languages");
+    }
+
+    public static String getOptPaths()
+    {
+        return getString("crawler", "optPaths");
+    }
+
+    public static void writeApiSettings(String consumerToken,
+                                        String consumerSecret,
+                                        String accessToken,
+                                        String accessSecret)
     {
         Wini ini = null;
         try {
@@ -61,6 +97,27 @@ public class SettingLoader
             ini.put("access", "secret", accessSecret);
             ini.store();
         } catch (IOException error) {
+            error.printStackTrace();
+        }
+    }
+
+    public static void writeCrawlerSettings(String keywords,
+                                            String userIds,
+                                            boolean strictFilter,
+                                            String languages,
+                                            String optPaths)
+    {
+        Wini ini;
+
+        try {
+            ini = new Wini(new File("settings.ini"));
+            ini.put("crawler", "keywords", keywords);
+            ini.put("crawler", "users", userIds);
+            ini.put("crawler", "strict", strictFilter ? "yes" : "no");
+            ini.put("crawler","languages",languages);
+            ini.put("crawler", "optPaths", optPaths);
+            ini.store();
+        } catch(IOException error) {
             error.printStackTrace();
         }
     }
