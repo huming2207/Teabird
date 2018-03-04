@@ -46,7 +46,7 @@ public class TeabirdApplication extends Application
 
             // Load layout from fxml
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(TeabirdApplication.class.getResource("view/Home.fxml"));
+            loader.setLocation(TeabirdApplication.class.getResource("../view/Home.fxml"));
 
             // Show the scene from the layout
             Scene scene = new Scene(loader.load());

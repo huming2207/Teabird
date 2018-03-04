@@ -8,14 +8,18 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class StatusWriter
 {
     private String outputPath;
+    private Logger logger;
 
-    public StatusWriter(String outputPath)
+    public StatusWriter(String outputPath, Logger logger)
     {
         this.outputPath = outputPath;
+        this.logger = logger;
     }
 
     public void writeStatusToText(Status status)
@@ -42,9 +46,11 @@ public class StatusWriter
         try {
             Files.write(Paths.get(statusPath.toString() + File.separator + "content.txt"),
                     status.getText().getBytes());
-        } catch (IOException e) {
+        } catch (IOException error) {
             System.err.println("Failed to write Twitter Status content!");
-            e.printStackTrace();
+            error.printStackTrace();
+            logger.severe(error.getLocalizedMessage());
+            logger.log(Level.SEVERE, error.getMessage(), error);
         }
     }
 
@@ -64,10 +70,12 @@ public class StatusWriter
         httpClient.newCall(request).enqueue(new Callback()
         {
             @Override
-            public void onFailure(Call call, IOException e)
+            public void onFailure(Call call, IOException error)
             {
-                System.err.println("Failed to download content, exception: " + e.getMessage());
-                e.printStackTrace();
+                System.err.println("Failed to download content, exception: " + error.getMessage());
+                error.printStackTrace();
+                logger.severe(error.getLocalizedMessage());
+                logger.log(Level.SEVERE, error.getMessage(), error);
             }
 
             @Override
@@ -86,20 +94,16 @@ public class StatusWriter
                         path.toString() + File.separator +
                         mediaEntity.getId() + "." + getExtensionByType(mediaEntity.getType()));
 
-                // When massive twitter contents is being download, it may uses too much disk IO.
-                // So, use a buffered wrapper to save time instead (need profiler to investigate if it really helps...)
-                BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream);
-
                 // Write to file
                 if (response.body() != null) {
-                    bufferedOutputStream.write(response.body().bytes());
+                    outputStream.write(response.body().bytes());
                 } else {
                     throw new IOException("Content is empty! " +
                             "Code: " + response.code() +
                             "URL: " + mediaUrl);
                 }
 
-                bufferedOutputStream.close();
+                outputStream.close();
             }
         });
     }
