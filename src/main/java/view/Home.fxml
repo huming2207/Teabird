@@ -122,5 +122,24 @@
                </GridPane.margin></Button>
             </GridPane>
         </Tab>
+        <Tab text="About">
+         <content>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="46.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="517.0" minWidth="10.0" prefWidth="505.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="144.0" minWidth="10.0" prefWidth="42.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="119.0" minHeight="0.0" prefHeight="24.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="338.0" minHeight="10.0" prefHeight="245.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="122.0" minHeight="10.0" prefHeight="88.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="87.0" minHeight="6.0" prefHeight="25.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Project &quot;Teabird&quot; vNext&#10;By &quot;Jackson&quot; Ming Hu @ 2018&#10;&#10;This program is licenced under CC-BY-NC-SA 4.0 (Australian version).&#10;Not for commercial purposes (way too crap for that). " wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+               </children>
+            </GridPane>
+         </content></Tab>
     </TabPane>
 </AnchorPane>
