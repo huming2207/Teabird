@@ -44,8 +44,9 @@ public class StatusWriter
 
         // Also don't forget to write status string!
         try {
-            Files.write(Paths.get(statusPath.toString() + File.separator + "content.txt"),
-                    status.getText().getBytes());
+            Path path = Paths.get(statusPath.toString() + File.separator + "content.txt");
+            if(!Files.exists(path.getParent()))  Files.createDirectories(path.getParent());
+            Files.write(path, status.getText().getBytes());
         } catch (IOException error) {
             System.err.println("Failed to write Twitter Status content!");
             error.printStackTrace();
@@ -87,6 +88,8 @@ public class StatusWriter
                             "URL: " + mediaUrl);
                 }
 
+                if(!Files.exists(path.getParent()))  Files.createDirectories(path.getParent());
+
                 // Since the URL didn't tell the type of the media content,
                 // we should use mediaEntity.getType() here to obtain the type of this file
                 // then convert to a specific file extension.
@@ -114,7 +117,7 @@ public class StatusWriter
             case "photo":
                 return "jpg";
             case "video":
-                return "video";
+                return "mp4";
             case "animated_gif":
                 return "gif";
             default:
