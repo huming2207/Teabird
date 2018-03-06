@@ -39,7 +39,8 @@ public class Worker
     {
         Preferences prefs = Preferences.userRoot().node("Teabird");
         configBuilder = new ConfigurationBuilder();
-        configBuilder.setDebugEnabled(true)
+        configBuilder.setTweetModeExtended(true) // set true to receive full text, or the results will be truncated
+                .setDebugEnabled(true)
                 .setOAuthConsumerKey(prefs.get("consumerToken", ""))
                 .setOAuthConsumerSecret(prefs.get("consumerSecret", ""))
                 .setOAuthAccessToken(prefs.get("accessToken", ""))
