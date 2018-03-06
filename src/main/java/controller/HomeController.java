@@ -8,13 +8,14 @@ import javafx.scene.control.*;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import twitter4j.FilterQuery;
-import worker.SettingLoader;
+import twitter4j.auth.AccessToken;
 import worker.TeabirdApplication;
 import worker.Worker;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.logging.*;
+import java.util.prefs.Preferences;
 
 public class HomeController
 {
@@ -68,9 +69,11 @@ public class HomeController
 
     private Logger logger;
 
+    private Preferences prefs;
+
     public HomeController()
     {
-
+        prefs = Preferences.userRoot().node("Teabird");
     }
 
     @FXML
@@ -106,30 +109,40 @@ public class HomeController
         });
 
         // Load settings
-        languageTextField.setText(SettingLoader.getLanguages());
-        keywordTextArea.setText(SettingLoader.getKeywords());
-        outputPathTextField.setText(SettingLoader.getOptPaths());
-        userIdTextArea.setText(SettingLoader.getUsers());
-        strictFilterCheckbox.setSelected(SettingLoader.getStrictFilterMode());
-        consumerTokenTextfield.setText(SettingLoader.getConsumerToken());
-        consumerSecretTextfield.setText(SettingLoader.getConsumerTokenSecret());
-        accessTokenTextfield.setText(SettingLoader.getAccessTokenStr());
-        accessSecretTextfield.setText(SettingLoader.getAccessSecretStr());
+        languageTextField.setText(prefs.get("langs", ""));
+        keywordTextArea.setText(prefs.get("keywords",""));
+        outputPathTextField.setText(prefs.get("optPath", ""));
+        userIdTextArea.setText(prefs.get("userIds", ""));
+        strictFilterCheckbox.setSelected(prefs.getBoolean("strictFilter", false));
+        consumerTokenTextfield.setText(prefs.get("consumerToken", ""));
+        consumerSecretTextfield.setText(prefs.get("consumerSecret", ""));
+        accessTokenTextfield.setText(prefs.get("accessToken", ""));
+        accessSecretTextfield.setText(prefs.get("accessSecret", ""));
     }
 
     @FXML
     private void handleApiSettingButton()
     {
-        SettingLoader.writeApiSettings(consumerTokenTextfield.getText(),
-                consumerSecretTextfield.getText(),
-                accessTokenTextfield.getText(),
-                accessSecretTextfield.getText());
+        prefs.put("consumerToken", consumerTokenTextfield.getText());
+        prefs.put("consumerSecret", consumerSecretTextfield.getText());
+        prefs.put("accessToken", accessTokenTextfield.getText());
+        prefs.put("accessSecret", accessSecretTextfield.getText());
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Settings saved");
+        alert.setTitle("API settings saved");
         alert.setHeaderText(null);
         alert.setContentText("Settings have been saved!");
         alert.show();
+    }
+
+    @FXML
+    private void handleSetOutputButton()
+    {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Pick a folder for output...");
+
+        File file = directoryChooser.showDialog(new Stage());
+        outputPathTextField.setText(file.getPath());
     }
 
     @FXML
@@ -146,24 +159,21 @@ public class HomeController
         }
     }
 
-    @FXML
-    private void handleSetOutputButton()
-    {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setTitle("Pick a folder for output...");
 
-        File file = directoryChooser.showDialog(new Stage());
-        outputPathTextField.setText(file.getPath());
-    }
 
     @FXML
     private void handleCrawlerSettingButton()
     {
-        SettingLoader.writeCrawlerSettings(keywordTextArea.getText(),
-                userIdTextArea.getText(),
-                strictFilterCheckbox.isSelected(),
-                languageTextField.getText(),
-                outputPathTextField.getText());
+        prefs.put("langs", languageTextField.getText());
+        prefs.put("keywords", keywordTextArea.getText());
+        prefs.put("optPath", outputPathTextField.getText());
+        prefs.putBoolean("strictFilter", strictFilterCheckbox.isSelected());
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Crawler settings saved");
+        alert.setHeaderText(null);
+        alert.setContentText("Settings have been saved!");
+        alert.show();
     }
 
     private void setWorkerTask()
@@ -192,9 +202,10 @@ public class HomeController
 
                 // Worker initialization
                 Worker worker = new Worker(filterQuery, outputPathTextField.getText(), logger);
-                worker.login(SettingLoader.getAccessToken(),
-                        SettingLoader.getConsumerToken(),
-                        SettingLoader.getConsumerTokenSecret());
+                worker.login(new AccessToken(prefs.get("accessToken", ""),
+                                prefs.get("accessSecret", "")),
+                        prefs.get("consumerToken", ""),
+                        prefs.get("consumerSecret", ""));
                 worker.createStream();
 
                 return "";
