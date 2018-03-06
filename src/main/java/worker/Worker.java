@@ -2,17 +2,18 @@ package worker;
 
 import twitter4j.*;
 import twitter4j.auth.AccessToken;
+import twitter4j.conf.ConfigurationBuilder;
+import twitter4j.conf.ConfigurationFactory;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 
 
 public class Worker
 {
     private boolean isStreamStarted = false;
-    private AccessToken accessToken;
-    private String consumerToken;
-    private String consumerSecret;
+    private ConfigurationBuilder configBuilder;
     private FilterQuery filterQuery;
     private String outputPath;
     private Logger logger;
@@ -34,14 +35,18 @@ public class Worker
         this.outputPath = outputPath;
     }
 
-    public void login(AccessToken accessToken, String consumerToken, String consumerSecret)
+    public void login(String consumerToken, String consumerSecret, String accessToken, String accessSecret)
     {
-        this.accessToken = accessToken;
-        this.consumerToken = consumerToken;
-        this.consumerSecret = consumerSecret;
+        Preferences prefs = Preferences.userRoot().node("Teabird");
+        configBuilder = new ConfigurationBuilder();
+        configBuilder.setDebugEnabled(true)
+                .setOAuthConsumerKey(prefs.get("consumerToken", ""))
+                .setOAuthConsumerSecret(prefs.get("consumerSecret", ""))
+                .setOAuthAccessToken(prefs.get("accessToken", ""))
+                .setOAuthAccessTokenSecret(prefs.get("accessSecret", ""));
     }
 
-    public void createStream()
+    public void createStream() throws TwitterException
     {
         logger.info("Worker started, creating stream...");
         isStreamStarted = true;
@@ -98,9 +103,9 @@ public class Worker
         };
 
 
-        TwitterStream twitterStream = new TwitterStreamFactory().getInstance();
-        twitterStream.setOAuthAccessToken(this.accessToken);
-        twitterStream.setOAuthConsumer(this.consumerToken, this.consumerSecret);
+        // Here we should use ConfigurationBuilder here, not TwitterStream.setOAuthAccessToken etc.
+        // That one will hangs the whole program somehow...
+        TwitterStream twitterStream = new TwitterStreamFactory(configBuilder.build()).getInstance();
 
 
         // Start to run the stream crawling!

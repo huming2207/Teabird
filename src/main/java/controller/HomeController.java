@@ -202,10 +202,10 @@ public class HomeController
 
                 // Worker initialization
                 Worker worker = new Worker(filterQuery, outputPathTextField.getText(), logger);
-                worker.login(new AccessToken(prefs.get("accessToken", ""),
-                                prefs.get("accessSecret", "")),
-                        prefs.get("consumerToken", ""),
-                        prefs.get("consumerSecret", ""));
+                worker.login(prefs.get("consumerToken", ""),
+                        prefs.get("consumerSecret", ""),
+                        prefs.get("accessToken", ""),
+                        prefs.get("accessSecret", ""));
                 worker.createStream();
 
                 return "";
