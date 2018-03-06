@@ -31,7 +31,7 @@
                 </rowConstraints>
                 <ToggleButton fx:id="startStopToggleButton" mnemonicParsing="false" onAction="#handleStartStopToggleButton" prefHeight="48.0" prefWidth="324.0" text="Start" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
 
-                <TextArea fx:id="outputTextArea" prefHeight="145.0" prefWidth="565.0" text="Debug output shows here" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
+                <TextArea fx:id="outputTextArea" editable="false" prefHeight="145.0" prefWidth="565.0" text="Debug output shows here" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
             </GridPane>
         </Tab>
         <Tab text="Crawler settings">
@@ -68,11 +68,11 @@
                 <TextField fx:id="outputPathTextField" promptText="Specify an output folder" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="5" />
                 <Button fx:id="setOutputButton" mnemonicParsing="false" onAction="#handleSetOutputButton" prefHeight="28.0" prefWidth="155.0" text="Select output path" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
             <Label prefHeight="18.0" prefWidth="79.0" text="Filter mode:" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-            <TextArea fx:id="keywordTextArea" prefHeight="200.0" prefWidth="271.0" promptText="Comma-separated, e.g. &quot;Donald Trump,Melcolm Turnbull&quot;..." GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="1">
+            <TextArea fx:id="keywordTextArea" prefHeight="200.0" prefWidth="271.0" promptText="Comma-separated, e.g. &quot;Donald Trump,Melcolm Turnbull&quot;..." wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets bottom="5.0" right="15.0" />
                </GridPane.margin></TextArea>
-            <TextArea fx:id="userIdTextArea" prefHeight="200.0" prefWidth="200.0" promptText="Comma-separated, must be numeric IDs" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="2">
+            <TextArea fx:id="userIdTextArea" prefHeight="200.0" prefWidth="200.0" promptText="Comma-separated, must be numeric IDs" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets right="15.0" top="5.0" />
                </GridPane.margin>
