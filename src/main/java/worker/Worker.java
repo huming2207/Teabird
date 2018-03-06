@@ -17,6 +17,7 @@ public class Worker
     private FilterQuery filterQuery;
     private String outputPath;
     private Logger logger;
+    private TwitterStream twitterStream;
 
     public Worker(FilterQuery filterQuery, String outputPath, java.util.logging.Logger logger)
     {
@@ -37,7 +38,7 @@ public class Worker
                 .setOAuthAccessTokenSecret(prefs.get("accessSecret", ""));
     }
 
-    public void createStream() throws TwitterException
+    public void createStream()
     {
         logger.info("Worker started, creating stream...");
         isStreamStarted = true;
@@ -102,7 +103,7 @@ public class Worker
 
         // Here we should use ConfigurationBuilder here, not TwitterStream.setOAuthAccessToken etc.
         // That one will hangs the whole program somehow...
-        TwitterStream twitterStream = new TwitterStreamFactory(configBuilder.build()).getInstance();
+        twitterStream = new TwitterStreamFactory(configBuilder.build()).getInstance();
 
 
         // Start to run the stream crawling!
@@ -121,5 +122,14 @@ public class Worker
     public boolean isStreamStarted()
     {
         return isStreamStarted;
+    }
+
+    public void killStream()
+    {
+        if(twitterStream != null) {
+            twitterStream.shutdown();
+            twitterStream.cleanUp();
+            logger.warning("Stream terminated!");
+        }
     }
 }

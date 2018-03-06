@@ -72,6 +72,8 @@ public class HomeController
 
     private Preferences prefs;
 
+    private Worker worker;
+
     public HomeController()
     {
         prefs = Preferences.userRoot().node("Teabird");
@@ -80,9 +82,6 @@ public class HomeController
     @FXML
     private void initialize()
     {
-        // Register the worker task when app starts
-        setWorkerTask();
-
         // Initialize logger
         logger = Logger.getLogger("com.jacksonhu.teabird");
         logger.setUseParentHandlers(false);
@@ -154,10 +153,35 @@ public class HomeController
         // If the button is toggled, then we start a new thread.
         // Otherwise, we stop that thread (may not work).
         if(startStopToggleButton.isSelected()) {
-            workerThread = new Thread(workerTask);
-            workerThread.start();
+            String splitRegex = "[,，]"; // ...just in case someone uses Chinese (CJK?) comma char here
+            FilterQuery filterQuery = new FilterQuery();
+            filterQuery.filterLevel(strictFilterCheckbox.isSelected() ? "medium" : "low");
+            filterQuery.track(keywordTextArea.getText().split(splitRegex));
+            filterQuery.language(languageTextField.getText().split(splitRegex));
+
+            if(!userIdTextArea.getText().isEmpty())
+            {
+                // Convert the text from the text area to long integer array
+                long userIdArray[] = Arrays.stream(
+                        userIdTextArea.getText().split(splitRegex)) // split text area's string to string array
+                        .mapToLong(Long::parseLong) // map to integer
+                        .toArray(); // Convert to array
+
+                filterQuery.follow(userIdArray);
+            }
+
+            // Worker initialization
+            worker = new Worker(filterQuery, outputPathTextField.getText(), logger);
+            worker.login(prefs.get("consumerToken", ""),
+                    prefs.get("consumerSecret", ""),
+                    prefs.get("accessToken", ""),
+                    prefs.get("accessSecret", ""));
+            worker.createStream();
+            startStopToggleButton.setText("Press again to stop...");
+
         } else {
-            workerThread.interrupt(); // TODO: add a "signal" to the thread instead.
+            worker.killStream();
+            startStopToggleButton.setText("Start");
         }
     }
 
@@ -176,43 +200,6 @@ public class HomeController
         alert.setHeaderText(null);
         alert.setContentText("Settings have been saved!");
         alert.show();
-    }
-
-    private void setWorkerTask()
-    {
-        this.workerTask = new Task<String>()
-        {
-            @Override
-            protected String call() throws Exception
-            {
-                String splitRegex = "[,，]"; // ...just in case someone uses Chinese (CJK?) comma char here
-                FilterQuery filterQuery = new FilterQuery();
-                filterQuery.filterLevel(strictFilterCheckbox.isSelected() ? "medium" : "low");
-                filterQuery.track(keywordTextArea.getText().split(splitRegex));
-                filterQuery.language(languageTextField.getText().split(splitRegex));
-
-                if(!userIdTextArea.getText().isEmpty())
-                {
-                    // Convert the text from the text area to long integer array
-                    long userIdArray[] = Arrays.stream(
-                            userIdTextArea.getText().split(splitRegex)) // split text area's string to string array
-                            .mapToLong(Long::parseLong) // map to integer
-                            .toArray(); // Convert to array
-
-                    filterQuery.follow(userIdArray);
-                }
-
-                // Worker initialization
-                Worker worker = new Worker(filterQuery, outputPathTextField.getText(), logger);
-                worker.login(prefs.get("consumerToken", ""),
-                        prefs.get("consumerSecret", ""),
-                        prefs.get("accessToken", ""),
-                        prefs.get("accessSecret", ""));
-                worker.createStream();
-
-                return "";
-            }
-        };
     }
 
     public void setMainApp(TeabirdApplication teabirdApplication)
