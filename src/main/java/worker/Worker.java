@@ -25,16 +25,6 @@ public class Worker
         this.logger = logger;
     }
 
-    public Worker(FilterQuery filterQuery, java.util.logging.Logger logger)
-    {
-        this.filterQuery = filterQuery;
-    }
-
-    public Worker(String outputPath, java.util.logging.Logger logger)
-    {
-        this.outputPath = outputPath;
-    }
-
     public void login(String consumerToken, String consumerSecret, String accessToken, String accessSecret)
     {
         Preferences prefs = Preferences.userRoot().node("Teabird");
@@ -57,6 +47,11 @@ public class Worker
             @Override
             public void onStatus(Status status)
             {
+                logger.info(String.format("Got new tweet by @%s, fav. %d times, retweet %d times, with media: %s",
+                        status.getUser().getName(),
+                        status.getFavoriteCount(),
+                        status.getRetweetCount(),
+                        (status.getMediaEntities().length > 0) ? "YES" : "NO"));
                 StatusWriter writer;
 
                 if(outputPath == null || outputPath.isEmpty()) {
@@ -71,7 +66,8 @@ public class Worker
             @Override
             public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice)
             {
-
+                logger.warning(String.format("Deletion notice received for status #%d, rip...",
+                        statusDeletionNotice.getStatusId()));
             }
 
             @Override
@@ -89,7 +85,7 @@ public class Worker
             @Override
             public void onStallWarning(StallWarning warning)
             {
-
+                logger.warning(String.format("Stall warning #%s occurs: %s", warning.getCode(), warning.getMessage()));
             }
 
             @Override

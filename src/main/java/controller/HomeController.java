@@ -1,5 +1,6 @@
 package controller;
 
+import helper.TeabirdLogFormatter;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 
@@ -86,13 +87,15 @@ public class HomeController
         logger = Logger.getLogger("com.jacksonhu.teabird");
         logger.setUseParentHandlers(false);
 
-        Formatter formatter = new SimpleFormatter();
+
         logger.addHandler(new Handler()
         {
             @Override
             public void publish(LogRecord record)
             {
-                Platform.runLater(() -> outputTextArea.appendText(formatter.format(record)));
+                Formatter formatter = new TeabirdLogFormatter();
+                String optString = formatter.format(record);
+                Platform.runLater(() -> outputTextArea.appendText(optString));
             }
 
             @Override
@@ -151,7 +154,6 @@ public class HomeController
         // If the button is toggled, then we start a new thread.
         // Otherwise, we stop that thread (may not work).
         if(startStopToggleButton.isSelected()) {
-            outputTextArea.textProperty().bind(workerTask.messageProperty());
             workerThread = new Thread(workerTask);
             workerThread.start();
         } else {
