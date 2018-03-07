@@ -1,10 +1,10 @@
 package worker;
 
 import twitter4j.*;
-import twitter4j.auth.AccessToken;
 import twitter4j.conf.ConfigurationBuilder;
-import twitter4j.conf.ConfigurationFactory;
 
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.Preferences;
@@ -18,6 +18,8 @@ public class Worker
     private String outputPath;
     private Logger logger;
     private TwitterStream twitterStream;
+    private long tweetReceived = 0;
+    private long startTimestamp;
 
     public Worker(FilterQuery filterQuery, String outputPath, java.util.logging.Logger logger)
     {
@@ -45,6 +47,8 @@ public class Worker
         logger.info("Worker started, creating stream...");
         isStreamStarted = true;
 
+        startTimestamp = new Date().getTime(); // Get the current Unix timestamp
+
         StatusListener statusListener = new StatusListener()
         {
             @Override
@@ -63,6 +67,7 @@ public class Worker
                 }
 
                 writer.writeStatusToText(status);
+                tweetReceived += 1;
             }
 
             @Override
@@ -132,6 +137,14 @@ public class Worker
             twitterStream.shutdown();
             twitterStream.cleanUp();
             logger.warning("Stream terminated!");
+            logger.info(String.format("Benchmark: %d tweets/second",
+                    (tweetReceived / TimeUnit.MILLISECONDS.toSeconds(
+                            new Date().getTime() - startTimestamp)))
+            );
+        } else {
+            logger.severe("Cannot stop the stream!");
         }
+
+
     }
 }
