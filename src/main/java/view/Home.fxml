@@ -29,7 +29,7 @@
                     <RowConstraints maxHeight="280.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
                     <RowConstraints maxHeight="255.0" minHeight="10.0" prefHeight="182.0" vgrow="SOMETIMES" />
                 </rowConstraints>
-                <ToggleButton fx:id="startStopToggleButton" mnemonicParsing="false" onAction="#handleStartStopToggleButton" prefHeight="48.0" prefWidth="324.0" text="Start" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                <ToggleButton fx:id="startStopToggleButton" mnemonicParsing="false" onAction="#handleStartStopToggleButton" prefHeight="78.0" prefWidth="338.0" text="Start" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
 
                 <TextArea fx:id="outputTextArea" editable="false" prefHeight="145.0" prefWidth="565.0" text="Debug output shows here" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" />
             </GridPane>
@@ -137,7 +137,7 @@
                 <RowConstraints maxHeight="87.0" minHeight="6.0" prefHeight="25.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Project &quot;Teabird&quot; vNext&#10;By &quot;Jackson&quot; Ming Hu @ 2018&#10;&#10;This program is licenced under CC-BY-NC-SA 4.0 (Australian version).&#10;Not for commercial purposes (way too crap for that). " wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Label text="Project &quot;Teabird&quot; vNext&#10;By &quot;Jackson&quot; Ming Hu @ 2018&#10;&#10;This program is licenced under CC-BY-NC-SA 4.0 (Australian version).&#10;Not for commercial purposes (way too crap for that). &#10;&#10;The copyright of cached content belongs to Twitter &amp; Twitter users. &#10;Please respect the local copyright law." wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
          </content></Tab>
