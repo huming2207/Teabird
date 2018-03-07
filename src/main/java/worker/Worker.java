@@ -29,13 +29,15 @@ public class Worker
     public void login(String consumerToken, String consumerSecret, String accessToken, String accessSecret)
     {
         Preferences prefs = Preferences.userRoot().node("Teabird");
+        int cpuCoreCount = Runtime.getRuntime().availableProcessors();
         configBuilder = new ConfigurationBuilder();
         configBuilder.setTweetModeExtended(true) // set true to receive full text, or the results will be truncated
                 .setDebugEnabled(true)
                 .setOAuthConsumerKey(prefs.get("consumerToken", ""))
                 .setOAuthConsumerSecret(prefs.get("consumerSecret", ""))
                 .setOAuthAccessToken(prefs.get("accessToken", ""))
-                .setOAuthAccessTokenSecret(prefs.get("accessSecret", ""));
+                .setOAuthAccessTokenSecret(prefs.get("accessSecret", ""))
+                .setAsyncNumThreads(cpuCoreCount); // Create more async worker threads on multi-core platforms
     }
 
     public void createStream()
