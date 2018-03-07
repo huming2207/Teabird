@@ -48,11 +48,10 @@ public class Worker
             @Override
             public void onStatus(Status status)
             {
-                logger.info(String.format("Got new tweet by @%s, fav. %d times, retweet %d times, with media: %s",
-                        status.getUser().getName(),
-                        status.getFavoriteCount(),
-                        status.getRetweetCount(),
-                        (status.getMediaEntities().length > 0) ? "YES" : "NO"));
+                logger.info(String.format("Got new tweet from twitter.com/%s/status/%s",
+                        status.getUser().getScreenName(),
+                        status.getId())
+                );
                 StatusWriter writer;
 
                 if(outputPath == null || outputPath.isEmpty()) {
@@ -74,7 +73,8 @@ public class Worker
             @Override
             public void onTrackLimitationNotice(int numberOfLimitedStatuses)
             {
-
+                logger.warning(String.format("You've got %d queries left in this 15-minute window!",
+                        numberOfLimitedStatuses));
             }
 
             @Override

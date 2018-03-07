@@ -111,6 +111,7 @@ public class HomeController
         });
 
         // Load settings
+        // TODO: put it to a data model?
         languageTextField.setText(prefs.get("langs", ""));
         keywordTextArea.setText(prefs.get("keywords",""));
         outputPathTextField.setText(prefs.get("optPath", ""));

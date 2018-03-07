@@ -28,18 +28,27 @@ public class StatusWriter
 
         // Create a path if it's not exist, then use toString() to grab the string out again.
         Path statusPath = Paths.get(outputPath
+                + File.separator // The "/" symbol in Linux/macOS/BSD, or "\" in Windows
+                + String.format("@%s", status.getUser().getScreenName()) // e.g. Donald Trump -> "realdonaldtrump"
                 + File.separator
-                + String.format("%d_%s_%s",
-                                status.getId(),
-                                status.getUser().getScreenName(),
-                                status.getUser().getId()));
+                + String.format("status#%s", status.getId())
+        );
 
 
         // Iterate media entities
         if(mediaEntities != null && mediaEntities.length > 0) {
-            for(MediaEntity mediaEntity : mediaEntities) {
+            for (int i = 0; i < mediaEntities.length; i++) {
+                MediaEntity mediaEntity = mediaEntities[i];
+                logger.info(String.format("Downloading media, type %s, sequence %d, total %d",
+                        mediaEntity.getType(),
+                        i + 1, // Don't forget that this index starts from 0...
+                        mediaEntities.length)
+                );
+
                 downloadMediaContent(statusPath, mediaEntity);
             }
+        } else {
+            logger.warning(String.format("No media found for status #%s", status.getId()));
         }
 
         // Also don't forget to write status string!
