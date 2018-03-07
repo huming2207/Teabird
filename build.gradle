@@ -52,4 +52,12 @@ jfx {
 
     // minimal requirement for jfxNative-task
     vendor = 'Jackson Ming Hu'
+
+    // app name
+    appName = 'Teabird'
+
+    bundleArguments = [
+            // dont bundle JRE (not recommended, but increases build-size/-speed)
+            runtime: null
+    ]
 }
