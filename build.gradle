@@ -48,7 +48,7 @@ dependencies {
 
 jfx {
     // minimal requirement for jfxJar-task
-    mainClass = 'com.jacksonhu.teabird.worker.TeabirdMain'
+    mainClass = 'TeabirdApplication'
 
     // minimal requirement for jfxNative-task
     vendor = 'Jackson Ming Hu'

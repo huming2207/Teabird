@@ -9,8 +9,6 @@ import javafx.scene.control.*;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import twitter4j.FilterQuery;
-import twitter4j.auth.AccessToken;
-import worker.TeabirdApplication;
 import worker.Worker;
 
 import java.io.File;
@@ -20,7 +18,6 @@ import java.util.prefs.Preferences;
 
 public class HomeController
 {
-    private TeabirdApplication teabirdApplication;
 
     @FXML
     private TextField consumerTokenTextfield;
@@ -201,11 +198,6 @@ public class HomeController
         alert.setHeaderText(null);
         alert.setContentText("Settings have been saved!");
         alert.show();
-    }
-
-    public void setMainApp(TeabirdApplication teabirdApplication)
-    {
-        this.teabirdApplication = teabirdApplication;
     }
 
     public void appendDebugText(String text)

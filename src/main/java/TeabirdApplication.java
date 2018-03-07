@@ -1,5 +1,3 @@
-package worker;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -46,7 +44,9 @@ public class TeabirdApplication extends Application
 
             // Load layout from fxml
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(TeabirdApplication.class.getResource("../view/Home.fxml"));
+            loader.setLocation(TeabirdApplication.class.getResource("fxml/Home.fxml"));
+
+            System.out.println("Main fxml path: " + TeabirdApplication.class.getResource("fxml/Home.fxml"));
 
             // Show the scene from the layout
             Scene scene = new Scene(loader.load());
