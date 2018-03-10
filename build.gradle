@@ -40,9 +40,8 @@ dependencies {
     // OkHttp
     compile 'com.squareup.okhttp3:okhttp:3.10.0'
 
-    // ControlsFX
-    compile group: 'org.controlsfx', name: 'controlsfx', version: '8.40.14'
-
+    // https://mvnrepository.com/artifact/org.hildan.fxgson/fx-gson
+    compile group: 'org.hildan.fxgson', name: 'fx-gson', version: '3.1.0'
 }
 
 

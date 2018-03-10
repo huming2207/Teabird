@@ -2,12 +2,14 @@ package controller;
 
 import helper.TeabirdLogFormatter;
 import javafx.application.Platform;
+import javafx.beans.property.StringProperty;
 import javafx.concurrent.Task;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
+import model.ApiSettingModel;
 import twitter4j.FilterQuery;
 import worker.Worker;
 
@@ -66,6 +68,18 @@ public class HomeController
     private Preferences prefs;
 
     private Worker worker;
+
+    private ApiSettingModel apiSettingModel;
+
+    public ApiSettingModel getApiSettingModel()
+    {
+        return apiSettingModel;
+    }
+
+    public void setApiSettingModel(ApiSettingModel model)
+    {
+        this.apiSettingModel = model;
+    }
 
     public HomeController()
     {

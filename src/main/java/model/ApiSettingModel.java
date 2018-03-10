@@ -1,8 +1,9 @@
 package model;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.StringProperty;
 
-public class SettingModel
+public class ApiSettingModel
 {
     private StringProperty consumerToken;
     private StringProperty consumerSecret;
