@@ -61,10 +61,6 @@ public class HomeController
     @FXML
     private TextField outputPathTextField;
 
-    private Task<String> workerTask = null;
-
-    private Thread workerThread = null;
-
     private Logger logger;
 
     private Preferences prefs;
